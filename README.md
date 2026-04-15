@@ -23,3 +23,5 @@
 ### 1. 安装依赖
 ```bash
 pip install -r requirements.txt
+### 2. 下载模型权重
+从 [Release](https://github.com/alln-hank/chinese-sentiment-roberta/releases/download/v1.0.0/best_model.zip) 下载 `best_model.zip`，解压到 `models/roberta_ultimate/best_model/`。
