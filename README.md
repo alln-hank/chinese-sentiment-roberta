@@ -25,3 +25,19 @@
 pip install -r requirements.txt
 ### 2. 下载模型权重
 从 [Release](https://github.com/alln-hank/chinese-sentiment-roberta/releases/download/v1.0.0/best_model.zip) 下载 `best_model.zip`，解压到 `models/roberta_ultimate/best_model/`。
+### 3. 运行推理测试
+```python
+from transformers import AutoTokenizer, AutoModelForSequenceClassification
+import torch
+
+model_path = "./models/roberta_ultimate/best_model"
+tokenizer = AutoTokenizer.from_pretrained(model_path)
+model = AutoModelForSequenceClassification.from_pretrained(model_path)
+
+text = "环境很好，但是服务态度极差"
+inputs = tokenizer(text, return_tensors="pt", max_length=273, truncation=True)
+with torch.no_grad():
+    probs = torch.softmax(model(**inputs).logits, dim=-1)
+print(f"负面概率: {probs[0][0]:.2%}")
+### 4. 启动 Gradio 演示
+python app/app.py
